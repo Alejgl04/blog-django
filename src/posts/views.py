@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 from .models import Post, Comment, PostView, Like
+from .forms import PostForm
 # Create your views here.
 
 class PostListView( ListView ):
@@ -13,24 +14,32 @@ class PostDetailView( DetailView ):
 
 
 class PostCreateView( CreateView ):
+  form_class = PostForm
   model = Post
-  fields = {
-    'title',
-    'content',
-    'tumbnail',
-    'author',
-    'slug'
-  }
+  success_url = '/'
+
+  def get_context_data(self, **kwargs):
+    context = super().get_context_data(**kwargs)
+    context.update({
+      'view_type': 'create'
+    })
+    return context
+  
+
 
 class PostUpdateView( UpdateView ):
+  form_class = PostForm
   model = Post
-  fields = {
-    'title',
-    'content',
-    'tumbnail',
-    'author',
-    'slug'
-  }
+  success_url = '/'
+
+
+  def get_context_data(self, **kwargs):
+    context = super().get_context_data(**kwargs)
+    context.update({
+      'view_type': 'update'
+    })
+    return context
+
 
 
 class PostDeleteView( DeleteView ):
