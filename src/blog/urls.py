@@ -3,7 +3,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
-from posts.views import PostListView, PostDetailView, PostCreateView, PostUpdateView, PostDeleteView
+from posts.views import PostListView, PostDetailView, PostCreateView, PostUpdateView, PostDeleteView, like
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -15,6 +15,8 @@ urlpatterns = [
     path('<slug>/', PostDetailView.as_view(), name='detail'),
     path('<slug>/update/', PostUpdateView.as_view(), name='update'),
     path('<slug>/delete/', PostDeleteView.as_view(), name='delete'),
+
+    path('like/<slug>/', like, name="like"),
 
 ]
 
