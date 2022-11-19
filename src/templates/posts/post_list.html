@@ -7,21 +7,24 @@
       <div class="row">
         {% for object in object_list %}
           <div class="col-3">
-            <a href="{{ object.get_absolute_url }}">        
               <div class="card mt-2" style="width: 18rem;">
                 <img src="{{object.tumbnail.url}}" class="card-img-top" alt="...">
                 <div class="card-body">
-                  <h5 class="card-title"> {{ object.title }} </h5>
+                  <a href="{{ object.get_absolute_url }}">        
+                    <h5 class="card-title"> {{ object.title }} </h5>
+                  </a> 
                   <p class="card-text">{{ object.content|truncatechars:40 }}</p>
                   <hr>
                   <p>
-                    <span>view count</span>
-                    <span>like count</span>
-                    <span>comment count</span>
+                    <span><i class="fas fa-thumbs-up"></i> {{ object.get_like_count }}</span>
+                    <span><i class="fas fa-eye"></i> {{ object.get_view_count }}</span>
+                    <span><i class="fas fa-comments"></i> {{ object.get_comment_count }}</span>
+                  </p>
+                  <p class="card-text">
+                    Posted {{ object.publish_date|timesince}} ago
                   </p>
                 </div> 
               </div>
-            </a> 
           </div>
         {% endfor %}
       </div>
