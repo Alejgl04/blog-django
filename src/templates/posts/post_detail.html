@@ -44,7 +44,7 @@
             {% for comment in object.comments  %}
               <div>
                 <p>
-                  {{ comment.content }}
+                   <b>{{comment.user}}:</b> {{ comment.content }}
                   <br>
                   <small>{{ comment.timestamp|timesince }} ago</small>
                 </p>

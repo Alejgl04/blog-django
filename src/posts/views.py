@@ -30,12 +30,12 @@ class PostDetailView( DetailView ):
     })
     return context
   
-  def get_object( self, **kwargs):
-    object = super().get_object( **kwargs )
-    # if self.request.user.is_authenticated:
+  # def get_object( self, **kwargs):
+  #   object = super().get_object( **kwargs )
+  #   # if self.request.user.is_authenticated:
 
-    PostView.objects.get_or_create( user = self.request.user, post = object )
-    return object
+  #   PostView.objects.get_or_create( user = self.request.user, post = object )
+  #   return object
 
 class PostCreateView( CreateView ):
   form_class = PostForm
@@ -73,13 +73,17 @@ class PostDeleteView( DeleteView ):
 
 def like( request, slug):
   post = get_object_or_404(Post, slug = slug)
-  like_query = Like.objects.filter( user = request.user, post = post )
-  if like_query.exists():
-    like_query[0].delete()
+  if request.user.is_authenticated:
+    like_query = Like.objects.filter( user = request.user, post = post )
+    if like_query.exists():
+      like_query[0].delete()
+      return redirect('detail', slug=slug)
+    
+    Like.objects.create( user = request.user, post = post )
     return redirect('detail', slug=slug)
-  
-  Like.objects.create( user = request.user, post = post )
-  return redirect('detail', slug=slug)
+  else:
+    return redirect('account_login')
+
 
 
 
