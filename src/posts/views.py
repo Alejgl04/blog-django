@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 from .models import Post, Comment, PostView, Like
-from .forms import PostForm
+from .forms import PostForm, CommentForm
 # Create your views here.
 
 class PostListView( ListView ):
@@ -12,6 +12,24 @@ class PostListView( ListView ):
 class PostDetailView( DetailView ):
   model = Post
 
+  def post( self, *args, **kwargs):
+    form = CommentForm( self.request.POST )
+    if form.is_valid():
+      post = self.get_object()
+      comment = form.instance
+      comment.user = self.request.user
+      comment.post = post
+      comment.save()
+      return redirect("detail", slug=post.slug)
+    return redirect("detail",  slug=self.get_object().slug)
+
+  def get_context_data(self, **kwargs):
+    context =  super().get_context_data(**kwargs)
+    context.update({
+      'form': CommentForm()
+    })
+    return context
+  
   def get_object( self, **kwargs):
     object = super().get_object( **kwargs )
     # if self.request.user.is_authenticated:
