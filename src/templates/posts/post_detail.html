@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
-<div class="">
-  <div class="container mt-4 mb-4">
-    <div class="col-4 offset-4">
+<div class="container">
+  <div class="row mt-4 mb-4">
+    <div class="col-6">
       <div class="card" style="padding: 10px;">
         
         <h2> {{ object.title }} </h2>
@@ -31,31 +31,38 @@
               {{ object.get_like_count }}
           </a>
           <hr>
-          {% if request.user.is_authenticated %}
-            <h4>Leave a comment below</h4>
-            <form method="POST">
-              {% csrf_token %}
-              {{ form|crispy }}
-
-              <button class="btn btn-primary mt-2" type="submit">Comment</button>
-            </form>
-            <hr>
-            <h5>Comments </h5>
-            {% for comment in object.comments  %}
-              <div>
-                <p>
-                   <b>{{comment.user}}:</b> {{ comment.content }}
-                  <br>
-                  <small>{{ comment.timestamp|timesince }} ago</small>
-                </p>
-              </div>
-              <hr>
-            {% endfor %}
-          {% else %}
-            <a href="{% url 'account_login' %}" class="btn btn-primary btn-sm btn-block">Login to comment</a>
-          {% endif %}
+        
         </div>
       </div>
+    </div>
+    <div class="col-6">
+      {% if request.user.is_authenticated %}
+      <h4>Leave a comment below</h4>
+      <form method="POST">
+        {% csrf_token %}
+        {{ form|crispy }}
+
+        <button class="btn btn-primary mt-2" type="submit">Comment</button>
+      </form>
+      <hr>
+      <h5>Comments </h5>
+        {% if object.get_comment_count > 0  %}
+          {% for comment in object.comments %}
+            <div>
+              <p>
+                <b>{{comment.user}}:</b> {{ comment.content }}
+                <br>
+                <small>{{ comment.timestamp|timesince }} ago</small>
+              </p>
+            </div>
+            <hr>
+          {% endfor %}
+        {% else %}
+          There aren't comments yet
+      {% endif %}
+    {% else %}
+      <a href="{% url 'account_login' %}" class="btn btn-primary btn-sm btn-block">Login to comment</a>
+    {% endif %}
     </div>
   </div>
 </div>
