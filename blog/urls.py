@@ -1,9 +1,9 @@
 from django.urls import path
-from core.urls import urlpatterns
 
+from .views import BlogListView
 
 app_name='blog'
 
 urlpatterns = [
-  
+  path('', BlogListView.as_view(), name='home'),
 ]

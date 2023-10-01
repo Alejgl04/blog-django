@@ -64,14 +64,6 @@
         "documentation": {}
     },
     {
-        "label": "urlpatterns",
-        "importPath": "core.urls",
-        "description": "core.urls",
-        "isExtraImport": true,
-        "detail": "core.urls",
-        "documentation": {}
-    },
-    {
         "label": "render",
         "importPath": "django.shortcuts",
         "description": "django.shortcuts",
@@ -85,6 +77,22 @@
         "description": "django.shortcuts",
         "isExtraImport": true,
         "detail": "django.shortcuts",
+        "documentation": {}
+    },
+    {
+        "label": "View",
+        "importPath": "django.views.generic",
+        "description": "django.views.generic",
+        "isExtraImport": true,
+        "detail": "django.views.generic",
+        "documentation": {}
+    },
+    {
+        "label": "View",
+        "importPath": "django.views.generic",
+        "description": "django.views.generic",
+        "isExtraImport": true,
+        "detail": "django.views.generic",
         "documentation": {}
     },
     {
@@ -127,14 +135,6 @@
         "description": "core.views",
         "isExtraImport": true,
         "detail": "core.views",
-        "documentation": {}
-    },
-    {
-        "label": "View",
-        "importPath": "django.views.generic",
-        "description": "django.views.generic",
-        "isExtraImport": true,
-        "detail": "django.views.generic",
         "documentation": {}
     },
     {
@@ -185,8 +185,17 @@
         "kind": 5,
         "importPath": "blog.urls",
         "description": "blog.urls",
-        "peekOfCode": "urlpatterns = [\n]",
+        "peekOfCode": "urlpatterns = [\n  path('', BlogListView.as_view(), name='home'),\n]",
         "detail": "blog.urls",
+        "documentation": {}
+    },
+    {
+        "label": "BlogListView",
+        "kind": 6,
+        "importPath": "blog.views",
+        "description": "blog.views",
+        "peekOfCode": "class BlogListView(View):\n  def get(self, request, *args, **kwargs):\n    context={}\n    return render(request, 'blog/list.html', context)",
+        "detail": "blog.views",
         "documentation": {}
     },
     {
