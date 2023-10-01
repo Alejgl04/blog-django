@@ -253,7 +253,7 @@
         "kind": 6,
         "importPath": "blog.views",
         "description": "blog.views",
-        "peekOfCode": "class BlogListView(View):\n  def get(self, request, *args, **kwargs):\n    context={}\n    return render(request, 'blog/list.html', context)\nclass BlogCreateView(View):\n  def get(self, request, *args, **kwargs):\n    form = PostCreateForm()\n    context = {'form': form}\n    return render( request, 'blog/create.html', context)\n  def post(self, request):",
+        "peekOfCode": "class BlogListView(View):\n  def get(self, request, *args, **kwargs):\n    list_posts = Post.objects.all() \n    context={\n      'list_posts': list_posts \n    }\n    return render(request, 'blog/list.html', context)\nclass BlogCreateView(View):\n  def get(self, request, *args, **kwargs):\n    form = PostCreateForm()",
         "detail": "blog.views",
         "documentation": {}
     },

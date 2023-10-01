@@ -1,3 +1,9 @@
 list blog
 <hr>
+  {% for post in list_posts %}
+    
+    {{ post.title }} |
+
+  {% endfor%}
+<hr>
 <a href="{% url 'blog:create' %}">Create new Post</a>

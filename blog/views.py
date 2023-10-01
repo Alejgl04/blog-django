@@ -7,7 +7,12 @@ from .forms import PostCreateForm
 # Create your views here.
 class BlogListView(View):
   def get(self, request, *args, **kwargs):
-    context={}
+
+    list_posts = Post.objects.all() 
+    context={
+      'list_posts': list_posts 
+    }
+    
     return render(request, 'blog/list.html', context)
 
 class BlogCreateView(View):
@@ -31,3 +36,4 @@ class BlogCreateView(View):
         post.save()
         if created:
           return redirect('blog:home')
+        
