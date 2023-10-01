@@ -48,6 +48,14 @@
         "documentation": {}
     },
     {
+        "label": "forms",
+        "importPath": "django",
+        "description": "django",
+        "isExtraImport": true,
+        "detail": "django",
+        "documentation": {}
+    },
+    {
         "label": "TestCase",
         "importPath": "django.test",
         "description": "django.test",
@@ -81,6 +89,14 @@
     },
     {
         "label": "render",
+        "importPath": "django.shortcuts",
+        "description": "django.shortcuts",
+        "isExtraImport": true,
+        "detail": "django.shortcuts",
+        "documentation": {}
+    },
+    {
+        "label": "redirect",
         "importPath": "django.shortcuts",
         "description": "django.shortcuts",
         "isExtraImport": true,
@@ -206,6 +222,15 @@
         "documentation": {}
     },
     {
+        "label": "PostCreateForm",
+        "kind": 6,
+        "importPath": "blog.forms",
+        "description": "blog.forms",
+        "peekOfCode": "class PostCreateForm( forms.ModelForm ):\n  class Meta:\n    model=Post\n    fields=('title', 'content')",
+        "detail": "blog.forms",
+        "documentation": {}
+    },
+    {
         "label": "Post",
         "kind": 6,
         "importPath": "blog.models",
@@ -219,7 +244,7 @@
         "kind": 5,
         "importPath": "blog.urls",
         "description": "blog.urls",
-        "peekOfCode": "urlpatterns = [\n  path('', BlogListView.as_view(), name='home'),\n]",
+        "peekOfCode": "urlpatterns = [\n  path('', BlogListView.as_view(), name='home'),\n  path('create/', BlogCreateView.as_view(), name='create'),\n]",
         "detail": "blog.urls",
         "documentation": {}
     },
@@ -228,7 +253,16 @@
         "kind": 6,
         "importPath": "blog.views",
         "description": "blog.views",
-        "peekOfCode": "class BlogListView(View):\n  def get(self, request, *args, **kwargs):\n    context={}\n    return render(request, 'blog/list.html', context)",
+        "peekOfCode": "class BlogListView(View):\n  def get(self, request, *args, **kwargs):\n    context={}\n    return render(request, 'blog/list.html', context)\nclass BlogCreateView(View):\n  def get(self, request, *args, **kwargs):\n    form = PostCreateForm()\n    context = {'form': form}\n    return render( request, 'blog/create.html', context)\n  def post(self, request):",
+        "detail": "blog.views",
+        "documentation": {}
+    },
+    {
+        "label": "BlogCreateView",
+        "kind": 6,
+        "importPath": "blog.views",
+        "description": "blog.views",
+        "peekOfCode": "class BlogCreateView(View):\n  def get(self, request, *args, **kwargs):\n    form = PostCreateForm()\n    context = {'form': form}\n    return render( request, 'blog/create.html', context)\n  def post(self, request):\n    if request.method == 'POST':\n      form = PostCreateForm( request.POST )\n      if form.is_valid():\n        title   = form.cleaned_data.get('title'  )",
         "detail": "blog.views",
         "documentation": {}
     },
