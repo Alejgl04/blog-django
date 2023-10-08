@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import View
 
 from .models import Post
@@ -37,3 +37,12 @@ class BlogCreateView(View):
         if created:
           return redirect('blog:home')
         
+
+class BlogDetailView(View):
+  def get(self, request, pk,*args, **kwargs):
+    post = get_object_or_404( Post, pk=pk )
+    context={
+      'post':post
+    }
+
+    return render(request, 'blog/detail.html', context)

@@ -104,6 +104,14 @@
         "documentation": {}
     },
     {
+        "label": "get_object_or_404",
+        "importPath": "django.shortcuts",
+        "description": "django.shortcuts",
+        "isExtraImport": true,
+        "detail": "django.shortcuts",
+        "documentation": {}
+    },
+    {
         "label": "render",
         "importPath": "django.shortcuts",
         "description": "django.shortcuts",
@@ -244,7 +252,7 @@
         "kind": 5,
         "importPath": "blog.urls",
         "description": "blog.urls",
-        "peekOfCode": "urlpatterns = [\n  path('', BlogListView.as_view(), name='home'),\n  path('create/', BlogCreateView.as_view(), name='create'),\n]",
+        "peekOfCode": "urlpatterns = [\n  path('', BlogListView.as_view(), name='home'),\n  path('create/', BlogCreateView.as_view(), name='create'),\n  path('<int:pk>/', BlogDetailView.as_view(), name='detail'),\n]",
         "detail": "blog.urls",
         "documentation": {}
     },
@@ -263,6 +271,15 @@
         "importPath": "blog.views",
         "description": "blog.views",
         "peekOfCode": "class BlogCreateView(View):\n  def get(self, request, *args, **kwargs):\n    form = PostCreateForm()\n    context = {'form': form}\n    return render( request, 'blog/create.html', context)\n  def post(self, request):\n    if request.method == 'POST':\n      form = PostCreateForm( request.POST )\n      if form.is_valid():\n        title   = form.cleaned_data.get('title'  )",
+        "detail": "blog.views",
+        "documentation": {}
+    },
+    {
+        "label": "BlogDetailView",
+        "kind": 6,
+        "importPath": "blog.views",
+        "description": "blog.views",
+        "peekOfCode": "class BlogDetailView(View):\n  def get(self, request, pk,*args, **kwargs):\n    post = get_object_or_404( Post, pk=pk )\n    context={\n      'post':post\n    }\n    return render(request, 'blog/detail.html', context)",
         "detail": "blog.views",
         "documentation": {}
     },
