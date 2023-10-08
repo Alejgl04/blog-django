@@ -72,6 +72,14 @@
         "documentation": {}
     },
     {
+        "label": "reverse_lazy",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
         "label": "path",
         "importPath": "django.urls",
         "description": "django.urls",
@@ -121,6 +129,22 @@
     },
     {
         "label": "View",
+        "importPath": "django.views.generic",
+        "description": "django.views.generic",
+        "isExtraImport": true,
+        "detail": "django.views.generic",
+        "documentation": {}
+    },
+    {
+        "label": "UpdateView",
+        "importPath": "django.views.generic",
+        "description": "django.views.generic",
+        "isExtraImport": true,
+        "detail": "django.views.generic",
+        "documentation": {}
+    },
+    {
+        "label": "DeleteView",
         "importPath": "django.views.generic",
         "description": "django.views.generic",
         "isExtraImport": true,
@@ -252,7 +276,7 @@
         "kind": 5,
         "importPath": "blog.urls",
         "description": "blog.urls",
-        "peekOfCode": "urlpatterns = [\n  path('', BlogListView.as_view(), name='home'),\n  path('create/', BlogCreateView.as_view(), name='create'),\n  path('<int:pk>/', BlogDetailView.as_view(), name='detail'),\n]",
+        "peekOfCode": "urlpatterns = [\n  path('', BlogListView.as_view(), name='home'),\n  path('create/', BlogCreateView.as_view(), name='create'),\n  path('<int:pk>/', BlogDetailView.as_view(), name='detail'),\n  path('<int:pk>/update/', BlogUpdateView.as_view(), name='update'),\n  path('<int:pk>/delete/', BlogDeleteView.as_view(), name='delete'),\n]",
         "detail": "blog.urls",
         "documentation": {}
     },
@@ -279,7 +303,25 @@
         "kind": 6,
         "importPath": "blog.views",
         "description": "blog.views",
-        "peekOfCode": "class BlogDetailView(View):\n  def get(self, request, pk,*args, **kwargs):\n    post = get_object_or_404( Post, pk=pk )\n    context={\n      'post':post\n    }\n    return render(request, 'blog/detail.html', context)",
+        "peekOfCode": "class BlogDetailView(View):\n  def get(self, request, pk,*args, **kwargs):\n    post = get_object_or_404( Post, pk=pk )\n    context={\n      'post':post\n    }\n    return render(request, 'blog/detail.html', context)\nclass BlogUpdateView(UpdateView):\n  model= Post\n  fields=['title','content']",
+        "detail": "blog.views",
+        "documentation": {}
+    },
+    {
+        "label": "BlogUpdateView",
+        "kind": 6,
+        "importPath": "blog.views",
+        "description": "blog.views",
+        "peekOfCode": "class BlogUpdateView(UpdateView):\n  model= Post\n  fields=['title','content']\n  template_name='blog/update.html'\n  def get_success_url(self) -> str:\n    pk = self.kwargs['pk']\n    return reverse_lazy('blog:detail', kwargs={'pk':pk})\nclass BlogDeleteView(DeleteView):\n  model= Post\n  template_name='blog/delete.html'",
+        "detail": "blog.views",
+        "documentation": {}
+    },
+    {
+        "label": "BlogDeleteView",
+        "kind": 6,
+        "importPath": "blog.views",
+        "description": "blog.views",
+        "peekOfCode": "class BlogDeleteView(DeleteView):\n  model= Post\n  template_name='blog/delete.html'\n  success_url = reverse_lazy('blog:home')",
         "detail": "blog.views",
         "documentation": {}
     },
